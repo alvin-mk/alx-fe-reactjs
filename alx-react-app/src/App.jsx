@@ -8,39 +8,6 @@ import MainContent from './components/MainContent'
 import Footer from './components/Footer'
 import UserProfile from './components/UserProfile'
 
-const userData = {
-  name: "Alice",
-  age: 25,
-  bio: "Loves hiking and photography",
-};
-
-import UserProfile from './components/UserProfile';
-
-function App() {
-  // ... other code
-
-  return (
-    <>
-      {/* ... other elements */}
-      <UserProfile {...userData} />
-    </>
-  );
-}
-
-import React from 'react';
-
-const UserProfile = (props) => {
-  return (
-    <div className="user-profile">
-      <h2>{props.name}</h2>
-      <p>Age: {props.age}</p>
-      <p>Bio: {props.bio}</p>
-    </div>
-  );
-};
-
-export default UserProfile;
-
 function App() {
   const [count, setCount] = useState(0)
 
@@ -54,7 +21,6 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
         <WelcomeMessage />
-        
       </div>
       <h1>Vite + React</h1>
       <div className="card">
@@ -67,6 +33,7 @@ function App() {
         <Header />
         <MainContent />
         <Footer />
+        <UserProfile name="Alice" age={25} bio="Loves hiking and photography" />
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
