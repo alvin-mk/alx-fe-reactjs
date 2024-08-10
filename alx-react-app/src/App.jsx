@@ -14,6 +14,33 @@ const userData = {
   age: 25,
   bio: "Loves hiking and photography",
 };
+import UserProfile from './components/UserProfile';
+
+function App() {
+  // ... other code
+
+  return (
+    <>
+      {/* ... other elements */}
+      <UserProfile {...userData} />
+    </>
+  );
+}
+
+import React from 'react';
+
+const UserProfile = (props) => {
+  return (
+    <div className="user-profile">
+      <h2>{props.name}</h2>
+      <p>Age: {props.age}</p>
+      <p>Bio: {props.bio}</p>
+    </div>
+  );
+};
+
+export default UserProfile;
+
 function App() {
   const [count, setCount] = useState(0)
 
