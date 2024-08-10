@@ -8,12 +8,12 @@ import MainContent from './components/MainContent'
 import Footer from './components/Footer'
 import UserProfile from './components/UserProfile'
 
-
 const userData = {
   name: "Alice",
   age: 25,
   bio: "Loves hiking and photography",
 };
+
 import UserProfile from './components/UserProfile';
 
 function App() {
