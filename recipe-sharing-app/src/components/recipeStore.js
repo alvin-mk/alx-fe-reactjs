@@ -39,6 +39,12 @@ const useRecipeStore = create(set => ({
     ) // Ensure filtered recipes are also updated
   })),
   
+  // Action to set the recipes (e.g., for initializing or bulk updates)
+  setRecipes: (recipes) => set({
+    recipes,
+    filteredRecipes: recipes // Update filtered recipes with the new list
+  }),
+  
   // Action to add a recipe to favorites
   addFavorite: (recipeId) => set(state => ({
     favorites: [...state.favorites, recipeId]
