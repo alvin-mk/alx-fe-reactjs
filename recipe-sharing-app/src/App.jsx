@@ -8,6 +8,8 @@ import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import SearchBar from './components/SearchBar';
 import recipeStore from './components/recipeStore'; 
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
 
 
 function App() {
