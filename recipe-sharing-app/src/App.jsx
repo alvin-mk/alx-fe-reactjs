@@ -23,6 +23,8 @@ function App() {
       <SearchBar />
       <AddRecipeForm />
       <RecipeList />
+      <FavoritesList />
+      <RecommendationsList />
       <Routes>
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
