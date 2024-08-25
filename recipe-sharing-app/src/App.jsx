@@ -15,13 +15,13 @@ function App() {
 
   return (
     <>
-    <Router>
+      
      <div className="App">
       <h1>Recipe Sharing App</h1>
       <SearchBar />
       <AddRecipeForm />
       <RecipeList />
-       <Routes>
+      <Routes>
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
         </Routes>
@@ -52,5 +52,3 @@ function App() {
     </>
   )
 }
-
-
