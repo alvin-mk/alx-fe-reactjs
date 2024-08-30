@@ -1,23 +1,28 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Profile from './Profile';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
+import Profile from './Profile';
+import Login from './Login';
 import BlogPost from './BlogPost';  // Import the BlogPost component
+import ProtectedRoute from './ProtectedRoute';  // Import the ProtectedRoute component
 
 function App() {
   return (
     <Router>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/profile">Profile</Link></li>
-          <li><Link to="/blog/1">Blog Post 1</Link></li>  {/* Example link to a dynamic blog post */}
-        </ul>
-      </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile/*" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/blog/:id" element={<BlogPost />} />  {/* Dynamic route for blog posts */}
+        
+        {/* Protected route for the Profile section */}
+        <Route 
+          path="/profile/*" 
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
     </Router>
   );
