@@ -1,29 +1,85 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import axios from 'axios';
 
-// Function to fetch posts data from JSONPlaceholder API
-const fetchPosts = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-  return res.json();
+const fetchPosts = async (page = 1) => {
+    const response = await axios.get(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10`);
+    return response.data;
 };
 
 function PostsComponent() {
-  const { data, error, isLoading, refetch } = useQuery('posts', fetchPosts);
+    const [page, setPage] = useState(1)
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+    const { isLoading, isError, data, error, refetch } = useQuery(["posts", page], () => fetchPosts(page), {
+        staleTime: 60000,
+        cacheTime: 300000,
+        refetchOnWindowFocus: false,
+        keepPreviousData: true
+    });
 
-  return (
-    <div>
-      <h2>Posts</h2>
-      <button onClick={() => refetch()}>Refetch Posts</button>
-      <ul>
-        {data.map((post) => (
-          <li key={post.id}>{post.title}</li>
-        ))}
-      </ul>
-    </div>
-  );
+    if (isLoading) return <div>Loading...</div>;
+
+    if (isError) return <div>Error: {error.message}</div>;
+
+    return (
+        <div style={{
+            padding: '20px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '5px',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+        }}>
+            <h2>Posts</h2>
+            <button
+                style={{
+                    marginLeft: '10px',
+                    padding: '5px 10px',
+                    borderRadius: '3px',
+                    backgroundColor: '#333',
+                    color: '#fff',
+                    cursor: 'pointer'
+                }}
+                onClick={() => refetch()}
+            >Refresh Posts</button>
+            <ul>
+                {
+                    data && data.map((post) => (
+                        <li key={post.id}>
+                            <h3>{post.title}</h3>
+                        </li>
+                    ))
+                }
+            </ul>
+            <div>
+                <button
+                    style={{
+                        marginLeft: '10px',
+                        padding: '5px 10px',
+                        borderRadius: '3px',
+                        backgroundColor: 'gray',
+                        color: '#fff',
+                        cursor: 'pointer'
+                    }}
+                    onClick={() => setPage((old) => Math.max(old - 1, 1))}
+                    disabled={page === 1}
+                >
+                    Previous Page
+                </button>
+                <span>Current Page: {page}</span>
+                <button 
+                style={{
+                    marginLeft: '10px',
+                    padding: '5px 10px',
+                    borderRadius: '3px',
+                    backgroundColor: '#333',
+                    color: '#fff',
+                    cursor: 'pointer'
+                }}
+                onClick={() => setPage((old) => old + 1)
+                }>Next Page</button>
+            </div>
+        </div>
+    );
 }
 
 export default PostsComponent;
