@@ -21,19 +21,19 @@ const RecipeDetail = () => {
       <img
         src={recipe.image}
         alt={recipe.title}
-        className="w-full h-64 object-cover rounded mb-4 sm:h-80 md:h-96"
+        className="w-full h-64 object-cover rounded mb-4 shadow-lg sm:h-80 md:h-96"
       />
-      <p className="text-gray-600 mb-4 text-lg sm:text-xl">{recipe.summary}</p>
+      <p className="text-gray-600 mb-4 text-lg sm:text-xl shadow p-4 rounded">{recipe.summary}</p>
       
       <h2 className="text-xl font-semibold mt-6 sm:text-2xl md:text-3xl">Ingredients</h2>
-      <ul className="list-disc ml-6 mt-2 text-gray-700">
+      <ul className="list-disc ml-6 mt-2 text-gray-700 shadow p-4 rounded">
         {recipe.ingredients.map((ingredient, index) => (
           <li key={index} className="mb-1">{ingredient}</li>
         ))}
       </ul>
 
       <h2 className="text-xl font-semibold mt-6 sm:text-2xl md:text-3xl">Instructions</h2>
-      <ol className="list-decimal ml-6 mt-2 text-gray-700">
+      <ol className="list-decimal ml-6 mt-2 text-gray-700 shadow p-4 rounded">
         {recipe.instructions.map((instruction, index) => (
           <li key={index} className="mb-2">{instruction}</li>
         ))}
