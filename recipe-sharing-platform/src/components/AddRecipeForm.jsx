@@ -4,6 +4,7 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState({});
 
   // Validation function to check if all fields are filled out
@@ -24,6 +25,12 @@ const AddRecipeForm = () => {
       newErrors.instructions = 'Instructions are required';
     }
 
+    if (!steps.trim()) {
+      newErrors.steps = 'Steps are required';
+    } else if (steps.split('.').length < 2) {
+      newErrors.steps = 'Please provide at least two steps';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -36,7 +43,8 @@ const AddRecipeForm = () => {
       const newRecipe = {
         title,
         ingredients: ingredients.split(','),
-        instructions: instructions.split('.'),
+        instructions,
+        steps: steps.split('.'),
       };
 
       console.log('Recipe Submitted:', newRecipe);
@@ -45,6 +53,7 @@ const AddRecipeForm = () => {
       setTitle('');
       setIngredients('');
       setInstructions('');
+      setSteps('');
       setErrors({});
     }
   };
@@ -75,21 +84,9 @@ const AddRecipeForm = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700">Instructions (period separated)</label>
+          <label className="block text-gray-700">Instructions</label>
           <textarea
             value={instructions}
             onChange={(e) => setInstructions(e.target.value)}
             className="w-full border p-2 rounded"
-          ></textarea>
-          {errors.instructions && <p className="text-red-500">{errors.instructions}</p>}
-        </div>
-
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
-          Submit Recipe
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default AddRecipeForm;
+          ></
