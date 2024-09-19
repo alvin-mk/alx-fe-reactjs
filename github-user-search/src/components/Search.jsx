@@ -6,11 +6,12 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');   // For the search input value
   const [userData, setUserData] = useState(null);     // For storing user data from the API
   const [loading, setLoading] = useState(false);      // For loading state during the API call
-  const [error, setError] = useState(null);           // For error state if the user is not found
+  const [error, setError] = useState('');             // For error state if the user is not found
 
   // Function to handle the search
   const handleSearch = async (e) => {
     e.preventDefault();            // Prevent the form from refreshing the page
+
     if (!searchTerm.trim()) {
       setError('Please enter a GitHub username.');  // Ensure input is not empty
       setUserData(null);
@@ -18,21 +19,18 @@ const Search = () => {
     }
 
     setLoading(true);              // Start the loading state
-    setError(null);                // Clear any previous error
+    setError('');                  // Clear any previous error
 
     try {
       const data = await fetchUserData(searchTerm);   // Fetch data using the GitHub API
-      if (data.message === 'Not Found') {
-        // If GitHub API returns "Not Found", set the appropriate error message
-        setUserData(null);
-        setError('Looks like we can’t find the user');
-      } else {
+      if (data) {
         setUserData(data);                              // Set the user data if successful
-        setError(null);
+      } else {
+        setError('Looks like we can’t find the user');  // Set error message if user data is not found
       }
     } catch (err) {
       setUserData(null);                              // Clear previous user data if an error occurs
-      setError("Looks like we can’t find the user");  // Set the error message if the API call fails
+      setError('Looks like we can’t find the user');  // Set the error message for any error
     } finally {
       setLoading(false);         // Stop the loading state
     }
@@ -85,4 +83,3 @@ const Search = () => {
 };
 
 export default Search;
-
