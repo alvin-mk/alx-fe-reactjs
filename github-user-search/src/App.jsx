@@ -1,3 +1,6 @@
+import React from 'react';
+import './index.css';  // Import Tailwind CSS
+
 const App = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
