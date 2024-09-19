@@ -32,7 +32,7 @@ const Search = () => {
       }
     } catch (err) {
       setUserData(null);                              // Clear previous user data if an error occurs
-      setError('Looks like we can’t find the user');  // Set the error message if the API call fails
+      setError("Looks like we can’t find the user");  // Set the error message if the API call fails
     } finally {
       setLoading(false);         // Stop the loading state
     }
