@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
+import { fetchUsers } from '../services/githubService'; // Adjust if the function name or path is different
 
 const Search = () => {
   // State variables
   const [searchTerm, setSearchTerm] = useState('');   // For the search input value
-  const [userData, setUserData] = useState(null);     // For storing user data from the API
+  const [usersData, setUsersData] = useState([]);     // For storing user data from the API (array of users)
   const [loading, setLoading] = useState(false);      // For loading state during the API call
-  const [error, setError] = useState('');             // For error state if the user is not found
+  const [error, setError] = useState('');             // For error state if no users are found
 
   // Function to handle the search
   const handleSearch = async (e) => {
@@ -14,7 +14,7 @@ const Search = () => {
 
     if (!searchTerm.trim()) {
       setError('Please enter a GitHub username.');  // Ensure input is not empty
-      setUserData(null);
+      setUsersData([]);
       return;
     }
 
@@ -22,14 +22,14 @@ const Search = () => {
     setError('');                  // Clear any previous error
 
     try {
-      const data = await fetchUserData(searchTerm);   // Fetch data using the GitHub API
-      if (data) {
-        setUserData(data);                              // Set the user data if successful
+      const data = await fetchUsers(searchTerm);   // Fetch data using the GitHub API
+      if (data.length > 0) {
+        setUsersData(data);                           // Set the users data if successful
       } else {
-        setError('Looks like we can’t find the user');  // Set error message if user data is not found
+        setError('Looks like we can’t find the user');  // Set error message if no users found
       }
     } catch (err) {
-      setUserData(null);                              // Clear previous user data if an error occurs
+      setUsersData([]);                             // Clear previous user data if an error occurs
       setError('Looks like we can’t find the user');  // Set the error message for any error
     } finally {
       setLoading(false);         // Stop the loading state
@@ -54,30 +54,32 @@ const Search = () => {
           Search
         </button>
       </form>
-      
-      "Looks like we cant find the user"
-      
+
       {/* Conditional rendering to display different content based on the state */}
       {loading && <p>Loading...</p>}   {/* Show loading message while API call is in progress */}
       {error && <p className="text-red-500">{error}</p>}        {/* Display error message if the API call fails */}
-      {userData && (                   {/* Display user data if API call is successful */}
-        <div className="user-info p-4 border rounded shadow-lg">
-          <img
-            src={userData.avatar_url}   // Display the user's GitHub avatar
-            alt={userData.login}        // Alt text for the avatar
-            className="w-16 h-16 rounded-full mx-auto"  // Tailwind CSS classes for styling the image
-          />
-          <h2 className="text-lg font-semibold text-center">{userData.name || userData.login}</h2>   {/* Display user's name or username */}
-          <p className="text-center">
-            <a
-              href={userData.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              View GitHub Profile          {/* Link to the user's GitHub profile */}
-            </a>
-          </p>
+      {usersData.length > 0 && (       {/* Display user data if API call is successful */}
+        <div>
+          {usersData.map(user => (        {/* Map over users data to display each user */}
+            <div key={user.id} className="user-info p-4 border rounded shadow-lg">
+              <img
+                src={user.avatar_url}   // Display the user's GitHub avatar
+                alt={user.login}        // Alt text for the avatar
+                className="w-16 h-16 rounded-full mx-auto"  // Tailwind CSS classes for styling the image
+              />
+              <h2 className="text-lg font-semibold text-center">{user.name || user.login}</h2>   {/* Display user's name or username */}
+              <p className="text-center">
+                <a
+                  href={user.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500"
+                >
+                  View GitHub Profile          {/* Link to the user's GitHub profile */}
+                </a>
+              </p>
+            </div>
+          ))}
         </div>
       )}
     </div>
