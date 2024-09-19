@@ -22,7 +22,7 @@ const Search = () => {
 
     setLoading(true);  // Start the loading state
     setError('');      // Clear any previous error
-
+    "Looks like we cant find the user"
     try {
       // Call fetchUserData with searchTerm, location, and minRepos
       const data = await fetchUserData(searchTerm, location, minRepos);
