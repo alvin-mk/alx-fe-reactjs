@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchUsers } from '../services/githubService'; // Ensure this path matches your file structure
+import { fetchUserData } from '../services/githubService'; // Ensure this path matches your file structure
 
 const Search = () => {
   // State variables
@@ -24,12 +24,12 @@ const Search = () => {
     setError('');      // Clear any previous error
 
     try {
-      // Call fetchUsers with searchTerm, location, and minRepos
-      const data = await fetchUsers(searchTerm, location, minRepos);
+      // Call fetchUserData with searchTerm, location, and minRepos
+      const data = await fetchUserData(searchTerm, location, minRepos);
       if (data.length > 0) {
         setUsersData(data);  // Set the users data if successful
       } else {
-        setError("Looks like we cant find the user");  // Set error message if no users found
+        setError("Looks like we can't find the user");  // Set error message if no users found
       }
     } catch (err) {
       setUsersData([]);  // Clear previous user data if an error occurs
@@ -61,7 +61,7 @@ const Search = () => {
           type="number"
           placeholder="Min Repos (optional)"  // Placeholder text for the minimum repos input
           value={minRepos}  // The input value is controlled by React state
-          onChange={(e) => setMinRepos(e.target.value)}  // Update state on user input
+          onChange={(e) => setMinRepos(Number(e.target.value))}  // Update state on user input
           className="border rounded px-4 py-2 w-full mt-2"  // Tailwind CSS for styling the input
         />
         <button
