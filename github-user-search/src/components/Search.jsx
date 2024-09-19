@@ -54,7 +54,9 @@ const Search = () => {
           Search
         </button>
       </form>
-
+      
+      "Looks like we cant find the user"
+      
       {/* Conditional rendering to display different content based on the state */}
       {loading && <p>Loading...</p>}   {/* Show loading message while API call is in progress */}
       {error && <p className="text-red-500">{error}</p>}        {/* Display error message if the API call fails */}
