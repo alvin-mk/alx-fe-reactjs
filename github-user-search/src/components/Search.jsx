@@ -29,7 +29,7 @@ const Search = () => {
       if (data.length > 0) {
         setUsersData(data);  // Set the users data if successful
       } else {
-        setError('Looks like we can’t find the user');  // Set error message if no users found
+        setError("Looks like we cant find the user");  // Set error message if no users found
       }
     } catch (err) {
       setUsersData([]);  // Clear previous user data if an error occurs
